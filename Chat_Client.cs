@@ -1,15 +1,37 @@
-using System.net.Sockets;
+﻿using System;
+using System.Net.Sockets;
 using System.Net;
+using System.Text;
+using System.Threading;
 
-static void Main(string[] args){
-    Socket transferSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-    transferSock.Connect(new IPEndPoint(IPAddress.Loopback, 10801));
+namespace Chat_Client
+{
+    class Program
+    {
+        public class StateObject{
+            public Socket workSocket = null;
+            public const int BufferSize = 256;
+            public byte[] buffer = new byte[BufferSize];
+            public StringBuilder sb = new StringBuilder();
+        }
 
-    transferSock.BeginReceive(receiveBytes, 0, 11, SocketFlags.None, new AsyncCallback(receiveStr), transferSock);
-}
+        public class AsynClient{
+            private const int port = 9999;
 
-static void receiveStr(IAsyncResult ar){
-    Socket transferSock = (Socket)ar.AsyncState;
-    int strLength = transferSock.EndReceive(ar);
-    Console.WriteLine(Encoding.Default.GetString(receiveBytes));
+            private static ManualResetEvent connectDone = new ManualResetEvent(false);  
+            private static ManualResetEvent sendDone = new ManualResetEvent(false);  
+            private static ManualResetEvent receiveDone = new ManualResetEvent(false); 
+            private static String response = String.Empty;
+
+            private static void StartClient(){
+                
+            }
+
+            private static void ConnectCallback(IAsyncResult ar){
+
+            }
+        }
+        
+
+    }
 }
